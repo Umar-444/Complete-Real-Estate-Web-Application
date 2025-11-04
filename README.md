@@ -40,6 +40,8 @@ A complete real estate management system featuring a modern admin dashboard and 
 
 *Built by Umar FarooQ - Professional Real Estate Management Solution*
 
+<img width="1509" height="653" alt="image" src="https://github.com/user-attachments/assets/46b23e56-cb2b-40be-909f-122fa7a95521" />
+
 ## ✨ Features
 
 ### 🔐 Admin Panel Features
