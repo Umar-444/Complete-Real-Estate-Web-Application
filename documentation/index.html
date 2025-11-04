@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Property Dealer - Documentation</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body { background: #f6f9fb; }
+    h1, h2, h3 { color: #185cff; }
+    .card { margin-bottom: 2rem; }
+    .highlight { background: #fffbe7; border-left: 4px solid #ff9800; padding: 1em; margin-bottom: 1em; }
+    pre { background: #f5f6fa; padding: 10px; border-radius: 6px; }
+    code { color: #e74c3c; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <div class="container py-5">
+    <div class="text-center mb-4">
+      <img src="../assets/img/logos/black-logo.png" alt="Property Dealer Logo" style="width:80px;height:auto;"/>
+      <h1 class="display-5 fw-bold">Property Dealer - Real Estate Web Application</h1>
+      <p class="lead text-muted">Installation & User Guide (Codecanyon Edition)</p>
+      <span class="badge bg-primary">Version 2.0.0</span>
+    </div>
+
+    <div class="card">
+      <div class="card-body">
+        <h2>📝 Overview</h2>
+        <p>Property Dealer is a professional real estate web app. Includes a modern admin dashboard, full CRUD for properties, dynamic image gallery, and a beautiful public-facing listings website. Built with PHP, MySQL, and Bootstrap 5.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-body">
+        <h2>✨ Features</h2>
+        <ul>
+          <li>Admin dashboard with statistics and charts</li>
+          <li>Full property CRUD (add, edit, delete, view)</li>
+          <li>Multiple images per property, drag/drop gallery editor</li>
+          <li>User-friendly, responsive frontend grid & search filters</li>
+          <li>Prepared statement security, CSRF, XSS protection</li>
+          <li>Image upload validation (types/size/extension)</li>
+          <li>Beautiful modal UI, hero sections, image fallback</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-body">
+        <h2>⚡ Installation</h2>
+        <ol>
+          <li><b>Unzip</b> the Codecanyon package and copy all files to your web server.</li>
+          <li><b>Database:</b>
+            <ul>
+              <li>Import: <code>database/real_estate.sql</code> into your MySQL database (use PHPMyAdmin or CLI).</li>
+              <li>Example CLI:<br><pre>mysql -u username -p database_name &lt; database/real_estate.sql</pre></li>
+            </ul>
+          </li>
+          <li><b>Edit DB Config:</b> 
+            <ul><li>Edit <code>include/config.php</code> <b>AND</b> <code>admin/include/config.php</code> with your DB credentials:</li></ul>
+            <pre><code>$con = mysqli_connect('localhost', 'DB_USERNAME', 'DB_PASS', 'DB_NAME');</code></pre>
+          </li>
+          <li><b>Set file permissions</b> (CLI):
+            <pre><code>chmod 755 admin/images/property_image/</code></pre></li>
+        </ol>
+        <div class="alert alert-warning mt-3">
+          <b>Security Tip:</b> After install, login to the admin and change the default password immediately.
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-body">
+        <h2>🔐 Admin Login (Demo)</h2>
+        <ul>
+          <li><b>URL:</b> <code>/admin/</code></li>
+          <li><b>Email:</b> <code>admin@example.com</code></li>
+          <li><b>Password:</b> <code>admin123</code></li>
+        </ul>
+        <div class="alert alert-danger">
+          Make sure to reset your admin password after first login!
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-body">
+        <h2>🗄️ How-To: Property Management</h2>
+        <ul>
+          <li>Go to <b>Admin Dashboard</b> → <b>Add Property</b> to create new listings (fill all fields, upload an image).</li>
+          <li>Use <b>View Properties</b> for a searchable, filterable grid. Edit and delete properties from here.</li>
+          <li>To add a gallery: use <b>Add Images</b> (max 5 per property, images must be JPG, PNG, WEBP, GIF).</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-body">
+        <h2>🖼️ Image Upload Help</h2>
+        <ul>
+          <li>Supported types: JPG, PNG, GIF, WEBP</li>
+          <li>Limit: 5MB per file</li>
+          <li>Filenames are auto-randomized</li>
+          <li>Default/fallback images shown for missing files</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-body">
+        <h2>💡 Usage - Frontend Website</h2>
+        <ul>
+          <li>Main grid shows available/sold properties with badges, search & sort.</li>
+          <li>Click any property for full gallery/details, agent info, map tab, etc.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-body">
+        <h2>❓ FAQ / Troubleshooting</h2>
+        <ul>
+          <li><b>Can't login to admin?</b> Check your DB, config, and login as above.</li>
+          <li><b>Images not uploading?</b> Check folder permissions (see above) and PHP file upload limits (in php.ini).</li>
+          <li><b>Database connection error?</b> Edit config files to match your DB, check error log <code>admin/include/db_error.log</code>.</li>
+          <li><b>Missing images?</b> System uses placeholder/fallback if images are missing or deleted.</li>
+          <li><b>Slow site?</b> Use optimal PHP version (8.0+), enable opcache, and use recommended server settings.</li>
+        </ul>
+        <div class="alert alert-info mb-2">
+          Questions or bugs? <b>Email:</b> contact@yourdomain.com &nbsp; | &nbsp; <b>Support via Codecanyon comments</b>
+        </div>
+      </div>
+    </div>
+
+    <footer class="text-center text-muted pt-4 pb-2" style="font-size:0.9em">&copy; 2025 Property Dealer Script by WorldWebTree. Licensed for Codecanyon resale. <br> For support, visit your Codecanyon product page or email your support address.
+    </footer>
+  </div>
+</body>
+</html>

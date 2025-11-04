@@ -1,5 +1,14 @@
 <?php
-session_start();
+/**
+ * Update Property Page (Admin)
+ * Allows updating any property entry, including image replacement, with input validation and secure SQL.
+ * Includes CSRF protection. Part of Codecanyon Real Estate project.
+ */
+if (session_status() == PHP_SESSION_NONE) { session_start(); }
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+$csrf_token = $_SESSION['csrf_token'];
 // Check if admin is logged in
 if (!isset($_SESSION['email'])) {
     header('location:index.php');
@@ -21,41 +30,50 @@ $sold_res=$res['sold'];
 
 if(isset($submit))
 {
-
-  $file=$_FILES['file']['name'];
-
-  if($file=="")
-  {
-
-  $query="update property set title='$title',bedroom='$bedroom',hall='$hall',kichan='$kichan',price='$price',sqr_price='$sqr_price',address='$add',description='$description',video='$video',location='$location',bathroom='$bathroom',balcony='$balcony',property_owner='$property_owner',property_type='$property_type',lot_size='$lot_size',land_area='$land_area',sold='$sold' where id='$id'";
-  mysqli_query($con,$query); 
-
-  $msg='<div class="alert alert-success alert-dismissible">
-    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-    <strong>Success!</strong> Property Data Update successful.
-  </div>';
-    echo"<script>window.location.href='view_property.php';</script>";
-  }
-  else
-  {
-
-
-  
-  $query="update property set title='$title',bedroom='$bedroom',hall='$hall',kichan='$kichan',price='$price',sqr_price='$sqr_price',address='$add',description='$description',video='$video',location='$location',bathroom='$bathroom',balcony='$balcony',property_owner='$property_owner',property_type='$property_type',lot_size='$lot_size',land_area='$land_area',sold='$sold',image='$file' where id='$id'";
-  mysqli_query($con,$query);
-  unlink("images/property_image/$img");
-
-  move_uploaded_file($_FILES['file']['tmp_name'],"images/property_image/".$_FILES['file']['name']); 
-
-
-   $msg='<div class="alert alert-success alert-dismissible">
-    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-    <strong>Success!</strong> Property Data Update successful.
-  </div>';
-
-echo"<script>window.location.href='view_property.php';</script>";
-
-   }          
+    if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+        $msg = '<div class="alert alert-danger alert-dismissible fade show" role="alert">Invalid CSRF token. Please reload the page and try again.<button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>';
+    } else {
+        $maxSize = 5 * 1024 * 1024; // 5MB
+        $allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+        $file = $_FILES['file']['name'];
+        if($file=="") {
+            $query = "UPDATE property SET title=?,bedroom=?,hall=?,kichan=?,price=?,sqr_price=?,address=?,description=?,video=?,location=?,bathroom=?,balcony=?,property_owner=?,property_type=?,lot_size=?,land_area=?,sold=? WHERE id=?";
+            if($stmt = $con->prepare($query)) {
+                $stmt->bind_param('siiiiddsssssssssi', $title, $bedroom, $hall, $kichan, $price, $sqr_price, $add, $description, $video, $location, $bathroom, $balcony, $property_owner, $property_type, $lot_size, $land_area, $sold, $id);
+                $stmt->execute();
+                $stmt->close();
+                $msg='<div class="alert alert-success alert-dismissible">Property Data Update successful.<button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>';
+                echo"<script>window.location.href='view_property.php';</script>";
+            }
+        } else {
+            $fileTmp  = $_FILES['file']['tmp_name'];
+            $fileSize = $_FILES['file']['size'];
+            $fileType = mime_content_type($fileTmp);
+            $ext      = strtolower(pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION));
+            if (!in_array($fileType, $allowedTypes) || !in_array($ext, ['jpg','jpeg','png','gif','webp'])) {
+                $msg = '<div class="alert alert-danger alert-dismissible fade show" role="alert">Only JPG, PNG, GIF, WEBP images are allowed.<button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>';
+            } elseif ($fileSize > $maxSize) {
+                $msg = '<div class="alert alert-danger alert-dismissible fade show" role="alert">Image too large. Max 5MB.<button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>';
+            } else {
+                $newName = uniqid('prop_', true) . '.' . $ext;
+                $target_dir = "images/property_image/";
+                $target_file = $target_dir . $newName;
+                if (move_uploaded_file($fileTmp, $target_file)) {
+                    if ($img && file_exists($target_dir.$img)) { unlink($target_dir.$img); }
+                    $query = "UPDATE property SET title=?,bedroom=?,hall=?,kichan=?,price=?,sqr_price=?,address=?,description=?,video=?,location=?,bathroom=?,balcony=?,property_owner=?,property_type=?,lot_size=?,land_area=?,sold=?,image=? WHERE id=?";
+                    if($stmt=$con->prepare($query)) {
+                        $stmt->bind_param('siiiiddssssssssssi', $title, $bedroom, $hall, $kichan, $price, $sqr_price, $add, $description, $video, $location, $bathroom, $balcony, $property_owner, $property_type, $lot_size, $land_area, $sold, $newName, $id);
+                        $stmt->execute();
+                        $stmt->close();
+                        $msg='<div class="alert alert-success alert-dismissible">Property Data Update successful.<button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>';
+                        echo"<script>window.location.href='view_property.php';</script>";
+                    }
+                } else {
+                    $msg = '<div class="alert alert-danger alert-dismissible fade show" role="alert">Failed to upload image file.<button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>';
+                }
+            }
+        }
+    }
 }
 
          ?>        
@@ -93,12 +111,13 @@ echo"<script>window.location.href='view_property.php';</script>";
                         </div>
                         <div class="body">
                             <form method="post" enctype="multipart/form-data">
+                                <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrf_token); ?>">
                                 <div class="row clearfix">
 
                                     <div class="col-lg-6 col-md-3 col-sm-3 col-xs-6">
                                         <div class="form-group form-float">
                                             <div class="form-line">
-                                                <input required type="text" name="title" value="<?php echo $res['title'];?>" class="form-control">
+                                                <input required type="text" name="title" value="<?php echo htmlspecialchars($res['title']);?>" class="form-control">
                                                 <label class="form-label">Property Title</label>
                                             </div>
                                         </div>
@@ -107,7 +126,7 @@ echo"<script>window.location.href='view_property.php';</script>";
                                     <div class="col-lg-6 col-md-3 col-sm-3 col-xs-6">
                                         <div class="form-group form-float">
                                             <div class="form-line">
-                                                <input required type="text" name="property_owner" value="<?php echo $res['property_owner'];?>" class="form-control">
+                                                <input required type="text" name="property_owner" value="<?php echo htmlspecialchars($res['property_owner']);?>" class="form-control">
                                                 <label class="form-label">Property Owner</label>
                                             </div>
                                         </div>
@@ -116,7 +135,7 @@ echo"<script>window.location.href='view_property.php';</script>";
                                     <div class="col-lg-6 col-md-3 col-sm-3 col-xs-6">
                                         <div class="form-group form-float">
                                             <div class="form-line">
-                                                <input required type="text" name="property_type" value="<?php echo $res['property_type'];?>" class="form-control">
+                                                <input required type="text" name="property_type" value="<?php echo htmlspecialchars($res['property_type']);?>" class="form-control">
                                                 <label class="form-label">Property Type</label>
                                             </div>
                                         </div>
@@ -125,7 +144,7 @@ echo"<script>window.location.href='view_property.php';</script>";
                                     <div class="col-lg-6 col-md-3 col-sm-3 col-xs-6">
                                         <div class="form-group form-float">
                                             <div class="form-line">
-                                                <input required type="text" name="lot_size" value="<?php echo $res['lot_size'];?>" class="form-control">
+                                                <input required type="text" name="lot_size" value="<?php echo htmlspecialchars($res['lot_size']);?>" class="form-control">
                                                 <label class="form-label">Property Lot Size</label>
                                             </div>
                                         </div>
@@ -150,7 +169,7 @@ echo"<script>window.location.href='view_property.php';</script>";
                                      <div class="col-lg-6 col-md-3 col-sm-3 col-xs-6">
                                         <div class="form-group form-float">
                                             <div class="form-line">
-                                                <input required type="text" name="land_area" value="<?php echo $res['land_area'];?>" class="form-control">
+                                                <input required type="text" name="land_area" value="<?php echo htmlspecialchars($res['land_area']);?>" class="form-control">
                                                 <label class="form-label">Land area</label>
                                             </div>
                                         </div>
@@ -160,7 +179,7 @@ echo"<script>window.location.href='view_property.php';</script>";
                                     <div class="col-lg-6 col-md-3 col-sm-3 col-xs-6">
                                         <div class="form-group form-float">
                                             <div class="form-line">
-                                                <input required type="number" name="price" value="<?php echo $res['price'];?>" class="form-control">
+                                                <input required type="number" name="price" value="<?php echo htmlspecialchars($res['price']);?>" class="form-control">
                                                 <label class="form-label">Price</label>
                                             </div>
                                         </div>
@@ -169,7 +188,7 @@ echo"<script>window.location.href='view_property.php';</script>";
                                     <div class="col-lg-6 col-md-3 col-sm-3 col-xs-6">
                                         <div class="form-group form-float">
                                             <div class="form-line">
-                                                <input required type="number" name="sqr_price" value="<?php echo $res['sqr_price'];?>" class="form-control">
+                                                <input required type="number" name="sqr_price" value="<?php echo htmlspecialchars($res['sqr_price']);?>" class="form-control">
                                                 <label class="form-label">Sqr Fit Price</label>
                                             </div>
                                         </div>
@@ -181,7 +200,7 @@ echo"<script>window.location.href='view_property.php';</script>";
                                     <div class="col-lg-6 col-md-3 col-sm-3 col-xs-6">
                                         <div class="form-group form-float">
                                             <div class="form-line">
-                                                <input type="text" name="add" value="<?php echo $res['address'];?>" class="form-control">
+                                                <input type="text" name="add" value="<?php echo htmlspecialchars($res['address']);?>" class="form-control">
                                                 <label class="form-label">Address</label>
                                             </div>
                                         </div>
@@ -190,7 +209,7 @@ echo"<script>window.location.href='view_property.php';</script>";
                                     <div class="col-lg-6 col-md-3 col-sm-3 col-xs-6">
                                         <div class="form-group form-float">
                                             <div class="form-line">
-                                                <textarea required name="description" class="form-control"><?php echo $res['description'];?></textarea>
+                                                <textarea required name="description" class="form-control"><?php echo htmlspecialchars($res['description']);?></textarea>
                                                 <label class="form-label">Description</label>
                                             </div>
                                         </div>
@@ -199,7 +218,7 @@ echo"<script>window.location.href='view_property.php';</script>";
                                     <div class="col-lg-6 col-md-3 col-sm-3 col-xs-6">
                                         <div class="form-group form-float">
                                             <div class="form-line">
-                                                <input type="text" class="form-control" value="<?php echo $res['video'];?>" required name="video">
+                                                <input type="text" class="form-control" value="<?php echo htmlspecialchars($res['video']);?>" required name="video">
                                                 <label class="form-label">Add Video Link</label>
                                             </div>
                                         </div>
@@ -208,7 +227,7 @@ echo"<script>window.location.href='view_property.php';</script>";
                                     <div class="col-lg-6 col-md-3 col-sm-3 col-xs-6">
                                         <div class="form-group form-float">
                                             <div class="form-line">
-                                                <input type="text" class="form-control" value="<?php echo $res['location'];?>" required name="location">
+                                                <input type="text" class="form-control" value="<?php echo htmlspecialchars($res['location']);?>" required name="location">
                                                 <label class="form-label">Add Location Link</label>
                                             </div>
                                         </div>
@@ -224,7 +243,7 @@ echo"<script>window.location.href='view_property.php';</script>";
                                       <div class="col-lg-6 col-md-3 col-sm-3 col-xs-6">                                       
                                      <div class="custom-file">
                                     <label class="form-label">Property Image</label>
-                                    <img src="images/property_image/<?php echo $img;?>" width="200">                              
+                                    <img src="images/property_image/<?php echo htmlspecialchars($img);?>" width="200">                              
                                      </div>                                            
                                       </div>
 
@@ -239,7 +258,7 @@ echo"<script>window.location.href='view_property.php';</script>";
                                     <div class="col-lg-6 col-md-3 col-sm-3 col-xs-6">
                                         <div class="form-group form-float">
                                             <div class="form-line">
-                                                <input required type="number" name="kichan" value="<?php echo $res['kichan'];?>" class="form-control">
+                                                <input required type="number" name="kichan" value="<?php echo htmlspecialchars($res['kichan']);?>" class="form-control">
                                                 <label class="form-label">Kitchan</label>
                                             </div>
                                         </div>
@@ -249,7 +268,7 @@ echo"<script>window.location.href='view_property.php';</script>";
                                     <div class="col-lg-6 col-md-3 col-sm-3 col-xs-6">
                                         <div class="form-group form-float">
                                             <div class="form-line">
-                                                <input required type="number" name="hall" value="<?php echo $res['hall'];?>" class="form-control">
+                                                <input required type="number" name="hall" value="<?php echo htmlspecialchars($res['hall']);?>" class="form-control">
                                                 <label class="form-label">Hall</label>
                                             </div>
                                         </div>
@@ -259,7 +278,7 @@ echo"<script>window.location.href='view_property.php';</script>";
                                     <div class="col-lg-6 col-md-3 col-sm-3 col-xs-6">
                                         <div class="form-group form-float">
                                             <div class="form-line">
-                                                <input required type="number" name="bedroom" value="<?php echo $res['bedroom'];?>" class="form-control">
+                                                <input required type="number" name="bedroom" value="<?php echo htmlspecialchars($res['bedroom']);?>" class="form-control">
                                                 <label class="form-label">Bedroom</label>
                                             </div>
                                         </div>
@@ -269,7 +288,7 @@ echo"<script>window.location.href='view_property.php';</script>";
                                     <div class="col-lg-6 col-md-3 col-sm-3 col-xs-6">
                                         <div class="form-group form-float">
                                             <div class="form-line">
-                                                <input required type="number" name="bathroom" value="<?php echo $res['bathroom'];?>" class="form-control">
+                                                <input required type="number" name="bathroom" value="<?php echo htmlspecialchars($res['bathroom']);?>" class="form-control">
                                                 <label class="form-label">Bathroom</label>
                                             </div>
                                         </div>
@@ -278,7 +297,7 @@ echo"<script>window.location.href='view_property.php';</script>";
                                     <div class="col-lg-6 col-md-3 col-sm-3 col-xs-6">
                                         <div class="form-group form-float">
                                             <div class="form-line">
-                                                <input required type="number" name="balcony" value="<?php echo $res['balcony'];?>" class="form-control">
+                                                <input required type="number" name="balcony" value="<?php echo htmlspecialchars($res['balcony']);?>" class="form-control">
                                                 <label class="form-label">Balcony</label>
                                             </div>
                                         </div>

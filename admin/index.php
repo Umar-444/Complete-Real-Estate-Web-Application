@@ -1,4 +1,5 @@
 <?php
+// Property Dealer - Codecanyon Edition | Version: 2.0.0 | License: Envato/Codecanyon Standard | Author: WorldWebTree
 session_start();
 include('include/config.php');
 

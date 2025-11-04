@@ -8591,6 +8591,56 @@ html.ie11 .bs-searchbox .form-control {
   transform: translateX(2px);
 }
 
+/* Loading Overlay */
+.loading-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    border-radius: 8px;
+}
+
+/* Enhanced DataTables Styling */
+.dataTables_wrapper .dataTables_length,
+.dataTables_wrapper .dataTables_filter,
+.dataTables_wrapper .dataTables_info,
+.dataTables_wrapper .dataTables_paginate {
+    margin-bottom: 1rem;
+}
+
+.dataTables_wrapper .dataTables_filter input:focus {
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+}
+
+.dataTables_wrapper .dataTables_length select:focus {
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+}
+
+/* Export Button Styling */
+.btn-group .btn {
+    margin-right: 2px;
+    border-radius: 6px !important;
+}
+
+.btn-group .btn:last-child {
+    margin-right: 0;
+}
+
+/* Table Hover Effects */
+.table-hover tbody tr:hover {
+    background-color: rgba(0, 0, 0, 0.075);
+    transform: scale(1.01);
+    transition: all 0.2s ease;
+}
+
 /* Enhanced Navbar */
 .navbar {
   position: fixed;

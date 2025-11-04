@@ -91,7 +91,7 @@
                             </div>
                             <div>
                                 <h6 class="mb-1">Office Address</h6>
-                                <p class="text-muted mb-0">Peshawar, KPK Pakistan</p>
+                                <p class="text-muted mb-0">Your Office Address Here</p>
                             </div>
                         </div>
                         <div class="d-flex mb-3">
@@ -100,7 +100,7 @@
                             </div>
                             <div>
                                 <h6 class="mb-1">Phone Number</h6>
-                                <p class="text-muted mb-1"><a href="tel:+966594576805" class="text-decoration-none">+966 594 576 805</a></p>
+                                <p class="text-muted mb-1"><a href="tel:+1112223333" class="text-decoration-none">+111 222 3333</a></p>
                                 <small class="text-muted">Mon - Sat: 9:00 AM - 8:00 PM</small>
                             </div>
                         </div>
@@ -110,7 +110,7 @@
                             </div>
                             <div>
                                 <h6 class="mb-1">Email Address</h6>
-                                <p class="text-muted mb-0"><a href="mailto:Umarpak995@gmail.com" class="text-decoration-none">Umarpak995@gmail.com</a></p>
+                                <p class="text-muted mb-0"><a href="mailto:contact@yourdomain.com" class="text-decoration-none">contact@yourdomain.com</a></p>
                             </div>
                         </div>
                         <div class="d-flex">
@@ -128,13 +128,13 @@
                     <div class="property-card p-4 mb-4">
                         <h5 class="mb-3 text-primary">Quick Contact</h5>
                         <div class="d-grid gap-2">
-                            <a href="tel:+966594576805" class="btn btn-outline-success">
+                            <a href="tel:+1112223333" class="btn btn-outline-success">
                                 <i class="fas fa-phone me-2"></i>Call Now
                             </a>
-                            <a href="https://wa.me/966594576805" class="btn btn-outline-success" target="_blank">
+                            <a href="#" class="btn btn-outline-success" target="_blank">
                                 <i class="fab fa-whatsapp me-2"></i>WhatsApp
                             </a>
-                            <a href="mailto:Umarpak995@gmail.com" class="btn btn-outline-primary">
+                            <a href="mailto:contact@yourdomain.com" class="btn btn-outline-primary">
                                 <i class="fas fa-envelope me-2"></i>Email Us
                             </a>
                         </div>
@@ -144,16 +144,16 @@
                     <div class="property-card p-4 mb-4">
                         <h5 class="mb-3 text-primary">Follow Us</h5>
                         <div class="d-flex gap-2 flex-wrap">
-                            <a href="https://facebook.com/umarpak995" target="_blank" class="btn btn-outline-primary btn-sm">
+                            <a href="#" target="_blank" class="btn btn-outline-primary btn-sm">
                                 <i class="fab fa-facebook-f me-1"></i>Facebook
                             </a>
-                            <a href="https://instagram.com/Umar_farooq_199" target="_blank" class="btn btn-outline-danger btn-sm">
+                            <a href="#" target="_blank" class="btn btn-outline-danger btn-sm">
                                 <i class="fab fa-instagram me-1"></i>Instagram
                             </a>
-                            <a href="https://linkedin.com/in/umar444" target="_blank" class="btn btn-outline-info btn-sm">
+                            <a href="#" target="_blank" class="btn btn-outline-info btn-sm">
                                 <i class="fab fa-linkedin-in me-1"></i>LinkedIn
                             </a>
-                            <a href="https://github.com/umar-444" target="_blank" class="btn btn-outline-dark btn-sm">
+                            <a href="#" target="_blank" class="btn btn-outline-dark btn-sm">
                                 <i class="fab fa-github me-1"></i>GitHub
                             </a>
                         </div>
@@ -163,8 +163,8 @@
                     <div class="bg-primary text-white p-4 rounded-3">
                         <h6 class="mb-2"><i class="fas fa-exclamation-triangle me-2"></i>24/7 Emergency</h6>
                         <p class="mb-2 small">For urgent property matters or after-hours assistance:</p>
-                        <a href="tel:+966594576805" class="text-white fw-bold">
-                            <i class="fas fa-phone me-1"></i>+966 594 576 805
+                        <a href="tel:+1112223333" class="text-white fw-bold">
+                            <i class="fas fa-phone me-1"></i>+111 222 3333
                         </a>
                     </div>
                 </div>
@@ -265,10 +265,10 @@
                         <h5 class="mb-3"><i class="fas fa-calendar-check me-2"></i>Schedule a Visit</h5>
                         <p class="mb-3">Want to discuss your property needs in person? Schedule a consultation with our experts.</p>
                         <div class="d-flex gap-2">
-                        <a href="tel:+966594576805" class="btn btn-light btn-sm">
+                        <a href="tel:+1112223333" class="btn btn-light btn-sm">
                             <i class="fas fa-phone me-1"></i>Call to Schedule
                         </a>
-                        <a href="mailto:Umarpak995@gmail.com" class="btn btn-outline-light btn-sm">
+                        <a href="mailto:contact@yourdomain.com" class="btn btn-outline-light btn-sm">
                             <i class="fas fa-envelope me-1"></i>Email Us
                         </a>
                         </div>
@@ -368,7 +368,7 @@
                         <a href="properties.php" class="btn btn-light btn-custom">
                             <i class="fas fa-search me-2"></i>Browse Properties
                         </a>
-                        <a href="tel:+966594576805" class="btn btn-outline-light btn-custom">
+                        <a href="tel:+1112223333" class="btn btn-outline-light btn-custom">
                             <i class="fas fa-phone me-2"></i>Call Now
                         </a>
                         <a href="admin/index.php" class="btn btn-warning btn-custom">

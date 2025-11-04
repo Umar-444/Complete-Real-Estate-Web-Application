@@ -1,3 +1,10 @@
+<?php
+/**
+ * All Properties Grid Page (Public)
+ * Showcases all real estate listings with search/filter and responsive grid.
+ * Database-driven, secure/escaped, Codecanyon-ready.
+ */
+?>
 <?php include('include/header.php'); ?>
 <div id="main-content" class="container pb-5 pt-4 mt-2">
 <!-- Advanced Hero Section -->
@@ -172,7 +179,13 @@ if ($query && mysqli_num_rows($query) > 0) {
             <div class="col-lg-4 col-md-6">
                 <div class="property-card animate__animated animate__fadeInUp">
                     <div class="position-relative property-image">
-                        <img src="admin/images/property_image/<?php echo $img; ?>" alt="<?php echo $title; ?>" class="w-100">
+                        <?php 
+                        $imgpath = 'admin/images/property_image/' . $img;
+                        if (!file_exists($imgpath) || empty($img)) {
+                            $imgpath = 'assets/img/avatar/avatar.jpg'; // or another placeholder
+                        }
+                        ?>
+                        <img src="<?php echo htmlspecialchars($imgpath); ?>" alt="<?php echo $title; ?>" class="w-100">
                         <div class="property-badge <?php echo $badge_class; ?>"><?php echo $badge; ?></div>
                     </div>
                     <div class="p-4 d-flex flex-column h-100">

@@ -1,5 +1,13 @@
 <?php
-session_start();
+/**
+ * Delete Property Handler (Admin)
+ * Deletes a property and associated images from DB and filesystem, with CSRF validation.
+ * For Codecanyon Real Estate product.
+ */
+if (session_status() == PHP_SESSION_NONE) { session_start(); }
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
 // Check if admin is logged in
 if (!isset($_SESSION['email'])) {
     header('location:index.php');
@@ -7,30 +15,39 @@ if (!isset($_SESSION['email'])) {
 }
 include('include/header.php');
 
-$sid=$_GET['x'];
+$sid = $_GET['x'] ?? null;
+$csrf = $_GET['csrf'] ?? null;
+if (!$sid || !isset($csrf) || $csrf !== $_SESSION['csrf_token']) {
+    exit('<div class="alert alert-danger">Invalid delete request or CSRF token. <a href="view_property.php">Back to Properties</a></div>');
+}
 
+// Secure select for main image
+$stmt1 = $con->prepare("SELECT image FROM property WHERE id = ?");
+$stmt1->bind_param('i', $sid);
+$stmt1->execute();
+$stmt1->bind_result($img);
+$stmt1->fetch();
+$stmt1->close();
+if ($img) { unlink("images/property_image/$img"); }
 
-$query1=mysqli_query($con,"select * from property where id='$sid'");
-$image=mysqli_fetch_array($query1);
-$img=$image['image'];
-unlink("images/property_image/$img");
+// Secure select for gallery images
+$stmt2 = $con->prepare("SELECT image1, image2, image3, image4 FROM images WHERE property_id = ?");
+$stmt2->bind_param('i', $sid);
+$stmt2->execute();
+$stmt2->bind_result($img1, $img2, $img3, $img4);
+$stmt2->fetch();
+$stmt2->close();
+foreach ([$img1, $img2, $img3, $img4] as $gimg) { if ($gimg) { unlink("images/property_image/$gimg"); }}
 
-
-$query2=mysqli_query($con,"select * from images where property_id='$sid'");
-$image1=mysqli_fetch_array($query2);
-
-$img1=$image1['image1'];
-$img2=$image1['image2'];
-$img3=$image1['image3'];
-$img4=$image1['image4'];
-
-unlink("images/property_image/$img1");
-unlink("images/property_image/$img2");
-unlink("images/property_image/$img3");
-unlink("images/property_image/$img4");
-
-mysqli_query($con,"delete from property where id='$sid'");
-mysqli_query($con,"delete from images where property_id='$sid'");
+// Secure deletes
+$stmt3 = $con->prepare("DELETE FROM property WHERE id = ?");
+$stmt3->bind_param('i', $sid);
+$stmt3->execute();
+$stmt3->close();
+$stmt4 = $con->prepare("DELETE FROM images WHERE property_id = ?");
+$stmt4->bind_param('i', $sid);
+$stmt4->execute();
+$stmt4->close();
 echo"<script>window.location.href='view_property.php';</script>";		
 	
 

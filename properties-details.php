@@ -1,4 +1,8 @@
-<?php 
+<?php
+/**
+ * Property Details Page (Public)
+ * Detailed showcase for individual property, gallery, tabs, agent info, XSS safe, Codecanyon Edition.
+ */
 include('include/header.php');
 include('include/config.php');
 $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
@@ -57,12 +61,12 @@ if ($sold === 'yes') {
       <div class="col-lg-9">
         <div class="glass-card p-5 mb-4 shadow-lg position-relative" style="backdrop-filter: blur(12px); background:rgba(255,255,255,0.14); border-radius:22px; border: 1.5px solid rgba(255,255,255,0.13);">
           <h1 class="display-5 fw-bold mb-2 text-nowrap">
-            <?php echo $title ?: 'Property Details'; ?>
+            <?php echo htmlspecialchars($title) ?: 'Property Details'; ?>
             <span class="badge <?php echo $badgeClass; ?> ms-3" style="font-size:1.1rem; vertical-align:middle;"> <?php echo $badgeText; ?> </span>
           </h1>
           <div class="d-flex align-items-center mb-3 gap-3">
             <i class="fas fa-map-marker-alt me-2"></i>
-            <span class="fs-5 opacity-85"> <?php echo $address ?: 'N/A'; ?> </span>
+            <span class="fs-5 opacity-85"> <?php echo htmlspecialchars($address) ?: 'N/A'; ?> </span>
           </div>
           <div class="row g-4">
             <div class="col-6 col-md-3 text-center">
@@ -111,7 +115,13 @@ if ($sold === 'yes') {
             if (count($images)):
             foreach($images as $index => $image): ?>
               <div class="carousel-item <?php echo $index === 0 ? 'active' : ''; ?>">
-                <img src="admin/images/property_image/<?php echo $image; ?>" class="d-block w-100" alt="Property image <?php echo $index + 1; ?>" style="height:420px; object-fit:cover;cursor:pointer;">
+                <?php 
+                $imgpath = 'admin/images/property_image/' . htmlspecialchars($image);
+                if (!file_exists($imgpath) || !$image) {
+                    $imgpath = 'assets/img/avatar/avatar.jpg'; // use placeholder path you like
+                }
+                ?>
+                <img src="<?php echo $imgpath; ?>" class="d-block w-100" alt="Property image <?php echo $index + 1; ?>" style="height:420px; object-fit:cover;cursor:pointer;">
               </div>
             <?php endforeach; else: ?>
               <div class="carousel-item active text-center d-flex align-items-center justify-content-center" style="height:420px; background:#f8fafc;">
@@ -134,7 +144,13 @@ if ($sold === 'yes') {
         <?php if(count($images) > 1): ?>
         <div class="d-flex flex-lg-column flex-row gap-2 gap-lg-3 overflow-auto p-1">
           <?php foreach($images as $index => $image): ?>
-            <img src="admin/images/property_image/<?php echo $image; ?>" style="width:100px;height:70px;object-fit:cover;border-radius: 10px;cursor:pointer;" class="shadow-sm border border-2 <?php echo $index===0 ? 'border-primary' : 'border-light'; ?> thumb-gallery-img" onclick="goToSlide(<?php echo $index; ?>)" loading="lazy">
+            <?php 
+            $imgpath = 'admin/images/property_image/' . htmlspecialchars($image);
+            if (!file_exists($imgpath) || !$image) {
+                $imgpath = 'assets/img/avatar/avatar.jpg'; // use placeholder path you like
+            }
+            ?>
+            <img src="<?php echo $imgpath; ?>" style="width:100px;height:70px;object-fit:cover;border-radius: 10px;cursor:pointer;" class="shadow-sm border border-2 <?php echo $index===0 ? 'border-primary' : 'border-light'; ?> thumb-gallery-img" onclick="goToSlide(<?php echo $index; ?>)" loading="lazy">
           <?php endforeach; ?>
         </div>
         <?php endif; ?>
@@ -143,14 +159,14 @@ if ($sold === 'yes') {
           <div class="d-flex gap-3 align-items-center">
             <img src="admin/images/user.png" style="width:50px;height:50px;object-fit:cover;border-radius:50%;border:2px solid var(--primary-color);">
             <div>
-              <span class="fw-semibold">Agent:</span> <?php echo $u_name ?: 'N/A'; ?>
+              <span class="fw-semibold">Agent:</span> <?php echo htmlspecialchars($u_name) ?: 'N/A'; ?>
               <div class="small text-muted">Top Seller <i class="fas fa-crown text-warning ms-1"></i></div>
             </div>
           </div>
           <div class="flex-lg-fill mt-2 mt-lg-3 d-grid gap-2 w-100">
-            <a href="mailto:Umarpak995@gmail.com" class="btn btn-outline-primary"><i class="fas fa-envelope"></i> Email</a>
-            <a href="tel:+966594576805" class="btn btn-outline-success"><i class="fas fa-phone"></i> Call</a>
-            <a href="https://wa.me/966594576805" class="btn btn-outline-success"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+            <a href="mailto:contact@yourdomain.com" class="btn btn-outline-primary"><i class="fas fa-envelope"></i> Email</a>
+            <a href="tel:+1112223333" class="btn btn-outline-success"><i class="fas fa-phone"></i> Call</a>
+            <a href="#" class="btn btn-outline-success"><i class="fab fa-whatsapp"></i> WhatsApp</a>
             <span class="badge bg-info mt-2"><i class="fas fa-check-circle me-1"></i> Verified Agent</span>
           </div>
         </div>
@@ -185,7 +201,7 @@ if ($sold === 'yes') {
         <div class="tab-content p-4 rounded shadow-sm bg-white animate__animated animate__fadeIn" id="propertyTabContent">
           <div class="tab-pane fade show active" id="desc" role="tabpanel">
             <h4 class="mb-2"><i class="fas fa-info-circle text-primary"></i> Property Description</h4>
-            <p class="text-muted fw-medium fs-5"><?php echo $description ?: 'No description available.'; ?></p>
+            <p class="text-muted fw-medium fs-5"><?php echo htmlspecialchars($description) ?: 'No description available.'; ?></p>
           </div>
           <div class="tab-pane fade" id="features" role="tabpanel">
             <h4 class="mb-2"><i class="fas fa-star text-warning"></i> Features</h4>
@@ -194,7 +210,7 @@ if ($sold === 'yes') {
               <span class="badge bg-info-subtle text-info fs-6"><i class="fas fa-bath me-1"></i> <?php echo $bathroom; ?> Bathrooms</span>
               <span class="badge bg-success-subtle text-success fs-6"><i class="fas fa-utensils me-1"></i> <?php echo $kichan; ?> Kitchen</span>
               <span class="badge bg-warning-subtle text-warning fs-6"><i class="fas fa-vector-square me-1"></i> <?php echo $sqr_price; ?> sqft</span>
-              <span class="badge bg-secondary-subtle text-secondary fs-6"><i class="fas fa-home me-1"></i> <?php echo $property_type; ?></span>
+              <span class="badge bg-secondary-subtle text-secondary fs-6"><i class="fas fa-home me-1"></i> <?php echo htmlspecialchars($property_type); ?></span>
               <?php if($balcony): ?><span class="badge bg-info text-white fs-6"><i class="fas fa-tree me-1"></i> <?php echo $balcony; ?> Balcony</span><?php endif; ?>
             </div>
           </div>

@@ -1,4 +1,8 @@
 
+<?php
+// Property Dealer - Codecanyon Edition | Version: 2.0.0 | License: Envato/Codecanyon Standard | Author: WorldWebTree
+?>
+
 <?php include('include/header.php');?>
 
 <!-- Hero Section -->
