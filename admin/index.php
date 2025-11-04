@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $que = mysqli_query($con, "SELECT * FROM admin WHERE email='$email' AND password='$pass'");
     if($que && mysqli_num_rows($que)) {
         $_SESSION['email'] = $email;
-        header('location:admin/dashboard.php');
+        header('location:dashboard.php');
         exit();
     } else {
         $err = "Invalid Email or Password!";
@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         body {
             font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #667eea 0%, #185cff 100%);
             min-height: 100vh;
             position: relative;
             overflow-x: hidden;
@@ -134,7 +134,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             left: 0;
             right: 0;
             height: 4px;
-            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(90deg, #667eea 0%, #185cff 100%);
         }
 
         .brand-section {
@@ -270,7 +270,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         .btn-login {
             width: 100%;
             padding: 1rem 2rem;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #667eea 0%, #185cff 100%);
             border: none;
             border-radius: 12px;
             color: white;

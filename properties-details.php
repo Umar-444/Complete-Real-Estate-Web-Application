@@ -148,9 +148,9 @@ if ($sold === 'yes') {
             </div>
           </div>
           <div class="flex-lg-fill mt-2 mt-lg-3 d-grid gap-2 w-100">
-            <a href="mailto:contact@propertydealer.com" class="btn btn-outline-primary"><i class="fas fa-envelope"></i> Email</a>
-            <a href="tel:+1234567890" class="btn btn-outline-success"><i class="fas fa-phone"></i> Call</a>
-            <a href="https://wa.me/1234567890" class="btn btn-outline-success"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+            <a href="mailto:Umarpak995@gmail.com" class="btn btn-outline-primary"><i class="fas fa-envelope"></i> Email</a>
+            <a href="tel:+966594576805" class="btn btn-outline-success"><i class="fas fa-phone"></i> Call</a>
+            <a href="https://wa.me/966594576805" class="btn btn-outline-success"><i class="fab fa-whatsapp"></i> WhatsApp</a>
             <span class="badge bg-info mt-2"><i class="fas fa-check-circle me-1"></i> Verified Agent</span>
           </div>
         </div>

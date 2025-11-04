@@ -9,14 +9,10 @@ include('include/header.php');
 ?>
     <!-- Header -->
 	
-    <section>
-       
-	   <!-- Left Sidebar -->
+   
+    <!-- Left Sidebar -->
 <?php include('include/sidebar.php');?>
         <!-- #END# Left Sidebar -->
-
-   
-    </section>
 
     <section class="content">
         <div class="container-fluid">
@@ -32,21 +28,23 @@ include('include/header.php');
             $revenue = mysqli_fetch_array($revenueQuery)['total'] ?? 0;
             ?>
 
+            <!-- Dashboard styles are now in css/style.css -->
+
             <!-- Page Header -->
             <div class="row mb-4">
                 <div class="col-12">
-                    <div class="d-flex justify-content-between align-items-center">
+                    <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3">
                         <div>
                             <h1 class="h3 mb-1 text-dark font-weight-bold">Dashboard Overview</h1>
                             <p class="text-muted mb-0">Welcome back! Here's what's happening with your real estate portal.</p>
                         </div>
-                        <div class="d-flex gap-2">
-                            <button class="btn btn-outline-primary">
-                                <i class="fas fa-download me-2"></i>Export Report
+                        <div class="d-flex flex-wrap gap-2">
+                            <button class="btn btn-outline-primary btn-sm" onclick="exportReport()">
+                                <i class="fas fa-download me-1"></i>Export
                             </button>
-                            <button class="btn btn-primary">
-                                <i class="fas fa-plus me-2"></i>Add Property
-                            </button>
+                            <a href="add_property.php" class="btn btn-primary btn-sm">
+                                <i class="fas fa-plus me-1"></i>Add Property
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -56,7 +54,7 @@ include('include/header.php');
             <div class="row g-4 mb-5">
                 <div class="col-xl-3 col-md-6">
                     <div class="stats-card fade-in">
-                        <div class="icon" style="background: linear-gradient(135deg, #667eea, #764ba2);">
+                        <div class="icon" style="background: linear-gradient(135deg, #667eea, #185cff);">
                             <i class="fas fa-home"></i>
                         </div>
                         <div class="stats-number" id="totalProperties"><?php echo $totalProperties; ?></div>
@@ -108,25 +106,15 @@ include('include/header.php');
             <div class="row g-4 mb-5">
                 <div class="col-xl-8">
                     <div class="card slide-up">
-                        <div class="card-header d-flex justify-content-between align-items-center">
+                        <div class="card-header">
                             <h5 class="mb-0">
                                 <i class="fas fa-chart-line me-2 text-primary"></i>
                                 Property Views Analytics
                             </h5>
-                            <div class="dropdown">
-                                <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                                    Last 30 Days
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">Last 7 Days</a></li>
-                                    <li><a class="dropdown-item" href="#">Last 30 Days</a></li>
-                                    <li><a class="dropdown-item" href="#">Last 90 Days</a></li>
-                                </ul>
-                            </div>
                         </div>
                         <div class="card-body">
                             <div class="chart-container">
-                                <canvas id="propertyViewsChart"></canvas>
+                                <canvas id="propertyViewsChart" height="300"></canvas>
                             </div>
                         </div>
                     </div>
@@ -141,25 +129,7 @@ include('include/header.php');
                         </div>
                         <div class="card-body">
                             <div class="chart-container">
-                                <canvas id="propertyTypesChart"></canvas>
-                            </div>
-                            <div class="mt-3">
-                                <div class="d-flex justify-content-between align-items-center mb-2">
-                                    <span class="text-sm text-muted">Apartments</span>
-                                    <span class="badge bg-primary">45%</span>
-                                </div>
-                                <div class="d-flex justify-content-between align-items-center mb-2">
-                                    <span class="text-sm text-muted">Houses</span>
-                                    <span class="badge bg-success">30%</span>
-                                </div>
-                                <div class="d-flex justify-content-between align-items-center mb-2">
-                                    <span class="text-sm text-muted">Commercial</span>
-                                    <span class="badge bg-warning">15%</span>
-                                </div>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <span class="text-sm text-muted">Land</span>
-                                    <span class="badge bg-info">10%</span>
-                                </div>
+                                <canvas id="propertyTypesChart" height="300"></canvas>
                             </div>
                         </div>
                     </div>
@@ -168,102 +138,124 @@ include('include/header.php');
 
             <!-- Recent Activities and Quick Actions -->
             <div class="row g-4">
-                <div class="col-xl-6">
-                    <div class="card slide-up">
-                        <div class="card-header d-flex justify-content-between align-items-center">
-                            <h5 class="mb-0">
-                                <i class="fas fa-clock me-2 text-info"></i>
-                                Recent Activities
-                            </h5>
-                            <a href="#" class="btn btn-sm btn-outline-primary">View All</a>
-                        </div>
-                        <div class="card-body p-0">
-                            <div class="list-group list-group-flush">
-                                <div class="list-group-item px-4 py-3">
-                                    <div class="d-flex align-items-center">
-                                        <div class="avatar avatar-sm me-3" style="background: linear-gradient(135deg, #667eea, #764ba2); border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; color: white;">
-                                            <i class="fas fa-plus"></i>
+                <div class="row g-4">
+                    <div class="col-xl-6 d-flex flex-column">
+                        <div class="card slide-up h-100 d-flex flex-column">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0">
+                                    <i class="fas fa-clock me-2 text-info"></i>
+                                    Recent Activities
+                                </h5>
+                                <a href="#" class="btn btn-sm btn-outline-primary">View All</a>
+                            </div>
+                            <div class="card-body flex-grow-1">
+                                <div class="activity-list">
+                                    <div class="activity-item d-flex align-items-start mb-3 pb-3 border-bottom border-light">
+                                        <div class="activity-icon me-3">
+                                            <div class="avatar" style="background: linear-gradient(135deg, #667eea, #185cff);">
+                                                <i class="fas fa-plus"></i>
+                                            </div>
                                         </div>
                                         <div class="flex-grow-1">
-                                            <p class="mb-1 fw-semibold">New property added</p>
-                                            <small class="text-muted">Luxury Villa in Downtown - $2.5M</small>
+                                            <div class="d-flex justify-content-between align-items-start">
+                                                <div>
+                                                    <h6 class="mb-1 fw-semibold">New property added</h6>
+                                                    <p class="mb-1 text-muted small">Luxury Villa in Downtown - $2.5M</p>
+                                                </div>
+                                                <small class="text-muted">2h ago</small>
+                                            </div>
                                         </div>
-                                        <small class="text-muted">2h ago</small>
                                     </div>
-                                </div>
-                                <div class="list-group-item px-4 py-3">
-                                    <div class="d-flex align-items-center">
-                                        <div class="avatar avatar-sm me-3" style="background: linear-gradient(135deg, #10b981, #34d399); border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; color: white;">
-                                            <i class="fas fa-user"></i>
+                                    <div class="activity-item d-flex align-items-start mb-3 pb-3 border-bottom border-light">
+                                        <div class="activity-icon me-3">
+                                            <div class="avatar" style="background: linear-gradient(135deg, #10b981, #34d399);">
+                                                <i class="fas fa-user"></i>
+                                            </div>
                                         </div>
                                         <div class="flex-grow-1">
-                                            <p class="mb-1 fw-semibold">New user registered</p>
-                                            <small class="text-muted">john.doe@example.com</small>
+                                            <div class="d-flex justify-content-between align-items-start">
+                                                <div>
+                                                    <h6 class="mb-1 fw-semibold">New user registered</h6>
+                                                    <p class="mb-1 text-muted small">john.doe@example.com</p>
+                                                </div>
+                                                <small class="text-muted">4h ago</small>
+                                            </div>
                                         </div>
-                                        <small class="text-muted">4h ago</small>
                                     </div>
-                                </div>
-                                <div class="list-group-item px-4 py-3">
-                                    <div class="d-flex align-items-center">
-                                        <div class="avatar avatar-sm me-3" style="background: linear-gradient(135deg, #f59e0b, #fbbf24); border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; color: white;">
-                                            <i class="fas fa-handshake"></i>
+                                    <div class="activity-item d-flex align-items-start">
+                                        <div class="activity-icon me-3">
+                                            <div class="avatar" style="background: linear-gradient(135deg, #f59e0b, #fbbf24);">
+                                                <i class="fas fa-handshake"></i>
+                                            </div>
                                         </div>
                                         <div class="flex-grow-1">
-                                            <p class="mb-1 fw-semibold">Property sold</p>
-                                            <small class="text-muted">Modern Apartment - $450K</small>
+                                            <div class="d-flex justify-content-between align-items-start">
+                                                <div>
+                                                    <h6 class="mb-1 fw-semibold">Property sold</h6>
+                                                    <p class="mb-1 text-muted small">Modern Apartment - $450K</p>
+                                                </div>
+                                                <small class="text-muted">1d ago</small>
+                                            </div>
                                         </div>
-                                        <small class="text-muted">1d ago</small>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-xl-6">
-                    <div class="card slide-up">
-                        <div class="card-header">
-                            <h5 class="mb-0">
-                                <i class="fas fa-tasks me-2 text-warning"></i>
-                                Quick Actions
-                            </h5>
-                        </div>
-                        <div class="card-body">
-                            <div class="row g-3">
-                                <div class="col-md-6">
-                                    <a href="add_property.php" class="btn btn-outline-primary w-100 p-3 h-auto d-flex align-items-center">
-                                        <div class="text-start">
-                                            <i class="fas fa-home fa-2x mb-2"></i>
-                                            <div class="fw-semibold">Add Property</div>
-                                            <small class="text-muted">List a new property</small>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-md-6">
-                                    <a href="view_property.php" class="btn btn-outline-success w-100 p-3 h-auto d-flex align-items-center">
-                                        <div class="text-start">
-                                            <i class="fas fa-list fa-2x mb-2"></i>
-                                            <div class="fw-semibold">View Properties</div>
-                                            <small class="text-muted">Manage listings</small>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-md-6">
-                                    <a href="add_property_image.php" class="btn btn-outline-info w-100 p-3 h-auto d-flex align-items-center">
-                                        <div class="text-start">
-                                            <i class="fas fa-images fa-2x mb-2"></i>
-                                            <div class="fw-semibold">Add Images</div>
-                                            <small class="text-muted">Upload photos</small>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-md-6">
-                                    <a href="view_property_image.php" class="btn btn-outline-warning w-100 p-3 h-auto d-flex align-items-center">
-                                        <div class="text-start">
-                                            <i class="fas fa-chart-bar fa-2x mb-2"></i>
-                                            <div class="fw-semibold">Analytics</div>
-                                            <small class="text-muted">View reports</small>
-                                        </div>
-                                    </a>
+                    <div class="col-xl-6 d-flex flex-column">
+                        <div class="card slide-up h-100 d-flex flex-column">
+                            <div class="card-header">
+                                <h5 class="mb-0">
+                                    <i class="fas fa-tasks me-2 text-warning"></i>
+                                    Quick Actions
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row g-3">
+                                    <div class="col-sm-6 col-lg-6">
+                                        <a href="add_property.php" class="action-card">
+                                            <div class="action-icon">
+                                                <i class="fas fa-home"></i>
+                                            </div>
+                                            <div class="action-content">
+                                                <h6 class="action-title">Add Property</h6>
+                                                <p class="action-desc">List a new property</p>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div class="col-sm-6 col-lg-6">
+                                        <a href="view_property.php" class="action-card">
+                                            <div class="action-icon">
+                                                <i class="fas fa-list"></i>
+                                            </div>
+                                            <div class="action-content">
+                                                <h6 class="action-title">View Properties</h6>
+                                                <p class="action-desc">Manage listings</p>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div class="col-sm-6 col-lg-6">
+                                        <a href="add_property_image.php" class="action-card">
+                                            <div class="action-icon">
+                                                <i class="fas fa-images"></i>
+                                            </div>
+                                            <div class="action-content">
+                                                <h6 class="action-title">Add Images</h6>
+                                                <p class="action-desc">Upload photos</p>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div class="col-sm-6 col-lg-6">
+                                        <a href="#" class="action-card" onclick="showNotification('Analytics feature coming soon!', 'info')">
+                                            <div class="action-icon">
+                                                <i class="fas fa-chart-bar"></i>
+                                            </div>
+                                            <div class="action-content">
+                                                <h6 class="action-title">Analytics</h6>
+                                                <p class="action-desc">View reports</p>
+                                            </div>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -273,5 +265,4 @@ include('include/header.php');
         </div>
     </section>
 <?php include'include/footer.php';?>
-	
     

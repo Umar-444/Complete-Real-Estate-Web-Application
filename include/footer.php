@@ -12,17 +12,17 @@
                         we help thousands of families find their dream homes every year.
                     </p>
                     <div class="d-flex">
-                        <a href="#" class="btn btn-outline-light btn-sm me-2">
+                        <a href="https://facebook.com/umarpak995" target="_blank" class="btn btn-outline-light btn-sm me-2" title="Facebook">
                             <i class="fab fa-facebook-f"></i>
                         </a>
-                        <a href="#" class="btn btn-outline-light btn-sm me-2">
-                            <i class="fab fa-twitter"></i>
-                        </a>
-                        <a href="#" class="btn btn-outline-light btn-sm me-2">
+                        <a href="https://instagram.com/Umar_farooq_199" target="_blank" class="btn btn-outline-light btn-sm me-2" title="Instagram">
                             <i class="fab fa-instagram"></i>
                         </a>
-                        <a href="#" class="btn btn-outline-light btn-sm me-2">
+                        <a href="https://linkedin.com/in/umar444" target="_blank" class="btn btn-outline-light btn-sm me-2" title="LinkedIn">
                             <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="https://github.com/umar-444" target="_blank" class="btn btn-outline-light btn-sm me-2" title="GitHub">
+                            <i class="fab fa-github"></i>
                         </a>
                     </div>
                 </div>
@@ -87,15 +87,15 @@
                 <h6 class="text-white mb-3">Contact Info</h6>
                 <div class="mb-2">
                     <i class="fas fa-map-marker-alt text-primary me-2"></i>
-                    <span>123 Property Street, Real Estate City, REC 12345</span>
+                    <span>Peshawar, KPK Pakistan</span>
                 </div>
                 <div class="mb-2">
                     <i class="fas fa-phone text-primary me-2"></i>
-                    <a href="tel:+1234567890" class="text-light text-decoration-none">+1 (234) 567-8900</a>
+                    <a href="tel:+966594576805" class="text-light text-decoration-none">+966 594 576 805</a>
                 </div>
                 <div class="mb-2">
                     <i class="fas fa-envelope text-primary me-2"></i>
-                    <a href="mailto:info@propertydealer.com" class="text-light text-decoration-none">info@propertydealer.com</a>
+                    <a href="mailto:Umarpak995@gmail.com" class="text-light text-decoration-none">Umarpak995@gmail.com</a>
                 </div>
                 <div class="mb-3">
                     <i class="fas fa-clock text-primary me-2"></i>
@@ -120,13 +120,19 @@
         <div class="row align-items-center">
             <div class="col-md-6">
                 <p class="mb-0">
-                    &copy; <?php echo date('Y'); ?> Property Dealer. All rights reserved.
+                    &copy; <?php echo date('Y'); ?> Property Dealer by Umar Pak. All rights reserved.
                 </p>
             </div>
             <div class="col-md-6 text-md-end">
-                <a href="#" class="text-light text-decoration-none me-3">Privacy Policy</a>
-                <a href="#" class="text-light text-decoration-none me-3">Terms of Service</a>
-                <a href="#" class="text-light text-decoration-none">Sitemap</a>
+                <a href="https://linkedin.com/in/umar444" target="_blank" class="text-light text-decoration-none me-3">
+                    <i class="fab fa-linkedin-in me-1"></i>LinkedIn
+                </a>
+                <a href="https://github.com/umar-444" target="_blank" class="text-light text-decoration-none me-3">
+                    <i class="fab fa-github me-1"></i>GitHub
+                </a>
+                <a href="mailto:Umarpak995@gmail.com" class="text-light text-decoration-none">
+                    <i class="fas fa-envelope me-1"></i>Contact
+                </a>
             </div>
         </div>
     </div>

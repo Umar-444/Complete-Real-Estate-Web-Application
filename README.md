@@ -1,6 +1,6 @@
 # 🏠 Property Dealer - Complete Real Estate Web Application
 
-**Created by Umar** | 📧 [Umarpak995@gmail.com](mailto:Umarpak995@gmail.com) | 💼 [LinkedIn: umar444](https://linkedin.com/in/umar444) | 💻 [GitHub: Umar-444](https://github.com/Umar-444)
+**Created by Umar Pak** | 📧 [Umarpak995@gmail.com](mailto:Umarpak995@gmail.com) | 💼 [LinkedIn: umar444](https://linkedin.com/in/umar444) | 💻 [GitHub: Umar-444](https://github.com/Umar-444)
 
 A complete real estate management system featuring a modern admin dashboard and responsive property listing website. Built with PHP, MySQL, and Bootstrap 5 for optimal performance and user experience.
 
@@ -38,7 +38,7 @@ A complete real estate management system featuring a modern admin dashboard and 
 - **Security**: Secure authentication and data validation
 - **Real-time**: Dynamic data fetching and interactive elements
 
-*Built by Umar   - Professional Real Estate Management Solution*
+*Built by Umar Pak - Professional Real Estate Management Solution*
 
 ## ✨ Features
 
@@ -497,7 +497,7 @@ tail -f /var/log/apache2/error.log
 
 ## 👨‍💻 Developer
 
-**Umar  ** - Full-Stack PHP Developer & Real Estate Technology Specialist
+**Umar Pak** - Full-Stack PHP Developer & Real Estate Technology Specialist
 
 ### Contact Information
 - 📧 **Email**: [Umarpak995@gmail.com](mailto:Umarpak995@gmail.com)
@@ -534,4 +534,4 @@ For technical support, feature requests, or collaboration opportunities:
 
 **🎉 Property Dealer - Your Complete Real Estate Management Solution!**
 
-*Built with ❤️ by Umar FarooQ - Modern web technologies for optimal real estate management experience.*
+*Built with ❤️ by Umar - Modern web technologies for optimal real estate management experience.*
